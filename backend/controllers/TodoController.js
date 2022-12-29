@@ -83,9 +83,6 @@ exports.deleteTodo = async (req, res) => {
     });
   }
 };
-//DEREFRENCE ID FROM PARAMETERS
-// CHECK IF TODO ALREADY EXISTS
-// IF EXISTS THRW
 
 exports.getTasks=async(req,res)=>{
 try
@@ -111,91 +108,69 @@ catch(error)
   });
 }};
 exports.createTask=async(req,res)=>{
-try
-{
-  const {id} = req.params;
-  const{tasktitle}=req.body;
-  const checkTodoExists = await Todo.findById(id);
-  if(!checkTodoExists)
-  {
-    throw new Error("no such todo exists");
-  }
-  await Todo.updateOne(
-    { _id: id },
-    { $push: { tasks:tasktitle } }
- )
-const todo=await Todo.findById(id);
-  res.status(200).json({
-      success: true,
-      message: "tasks successfully added",
-      todo
-  })
+  try {
+    const todoId = req.params.id;
+    const {task} = req.body;
+    if(task){
+    const tasks = await Todo.findByIdAndUpdate(todoId, {$addToSet : {"tasks" : {'task' :task}} });
+    res.status(201).json({
+        success:true,
+        message:"task Created Successfully"
+    });
 }
-catch(error) 
-{
-  res.status(401).json({
-      success: false,
-      message:error.message,
-  })
-}
-};
-// exports.editTask=async(req,res)=>{
-// try
-// {
-//   const {id,idx} = req.params;
-//   const{tasktitle}=req.body;
-//   const checkTodoExists = await Todo.findById(id);
-//   if(!checkTodoExists)
-//   {
-//     throw new Error("no such todo exists");
-//   }
-//   const todo = await Todo.findById(id);
-//   const tasksarray=todo.tasks;
-//   tasksarray[idx].title=tasktitle;
-//   res.status(200).json({
-//     success:true,
-//     todo
-//   })
-// }
-// catch(error) {
-//   res.status(401).json({
-//     success:false,
-//     message:error.message
-//   })
-// }
-// };
-exports.deleteTasks=async(req,res)=>{
-  try
-  {
-    const todoid=req.params.id;
-    const taskidx=req.params.idx;
-    const todo = await Todo.findById(todoid);
-    const urlstring=tasks.taskidx;
-    Todo.todo.update({}, {$unset : {urlstring : 1 }}) 
-    Todo.todo.update({}, {$pull : {"tasks" : null}})
-  }
-  catch(error)
-  {
+else if(!task){
     res.status(401).json({
-      success:false,
-      message:error.message
-    }) 
-  }
-};
-// exports.deleteTasks=async(req,res)=>{
-// try
-// {
+        success:false,
+        message:"Enter Task"
+    });
+}
+} catch (error) {
     
+}
 
-//     // const checkTodoExists=await Todo.findById(id);
-//     // if(!checkTodoExists)
-//     //   throw new Error("no such todo exists");
+};
+exports.deleteTasks=async(req,res)=>{
+  const id = req.params.id;
+  const todoid=id.split("_")[0];
+  const taskid=id.split("_")[1];
+  console.log(`todo id:${todoid}`);
+  console.log(`task id:${taskid}`);
+  const getTodoarr = await Todo.findById(id.split("_")[0]);
+  console.log(getTodoarr);
+  let delArray = getTodoarr.tasks.filter(x => x._id != taskid);
+  getTodoarr.tasks = delArray;
+  await Todo.findByIdAndUpdate(id.split("_")[0],getTodoarr);
+  let narr=await Todo.findById(id.split("_")[0]);
+  res.status(201).json({
+      success:true,
+      message:"Task Deleted Successfully",
+      narr
+  })
+};
+exports.editTasks=async(req,res)=>{
+  const id = req.params.id;
+    // split id to findandUpdate
+    const todoId=id.split("_")[0];
+    const taskId=id.split("_")[1];
+    // capture task value
+    const task = req.body.task;    
+    const updateTask = await Todo.findOneAndUpdate({_id:id.split("_")[0], "tasks._id":id.split("_")[1]}, { $set: { "tasks.$.task":task,"tasks.$.taskCompleted":false}});
+    res.status(201).json({
+        success:true,
+        message:"Task Updated Successfully"
+    })
+}
+exports.completedTask = async(req, res) => {
+  const id = req.params.id;
+  // split id to findandUpdate
+  const todoId=id.split("_")[0];
+  const taskId=id.split("_")[1];
 
-//     // const todo=await Todo.findById(id);
-//     // const tasksarray=todo.tasks;
-//     // tasksarray.splice(idx,1);
-//     // res.status(200).json({
-//     //   success:true,
-//     //   todo
-//     // })
-// }
+  // capture task value
+  const task = req.body.task;
+  const updateTask = await Todo.findOneAndUpdate({_id:todoId, "tasks._id":taskId}, { $set: { "tasks.$.taskCompleted":true}});
+  res.status(201).json({
+      success:true,
+      message:"Task Completed Succesfully",
+  })
+};

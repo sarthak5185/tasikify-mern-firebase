@@ -21,8 +21,8 @@ const Task= ({todo,index,deleteTodo,getSingleTodo}) => {
         <b>{index+1}. </b>
           {todo.title}
       </p>
-      <div className="task-icons" onClick={()=>navigate(`${todo.title}/${todo._id}`)}>
-       <BiMessageAltAdd color="green"/>
+      <div className="task-icons">
+       <BiMessageAltAdd color="green" onClick={()=>navigate(`${todo.title}/${todo._id}`)}/>
        <FaEdit color="purple" onClick={() => getSingleTodo(todo)} />
        <FaRegTrashAlt color="red" onClick={()=>deleteTodo(todo._id)}/>
       </div>

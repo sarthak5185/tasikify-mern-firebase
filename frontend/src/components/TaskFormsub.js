@@ -1,15 +1,19 @@
 import React from 'react'
-
-function TaskFormbsub({createTask,tasktitle,handleInputChange}) {
-  return (
-    <form className="task-form" onSubmit={createTask}>
+const TaskFormsub = ({
+  createTask,
+  tasktitle,
+  handleInputChange,
+  isEditing,
+  updateTask
+}) => (
+  <form className="task-form" onSubmit={isEditing ? updateTask:createTask}>
     <input
       type="text"
-      placeholder="Add a Task"
+      placeholder="Add a Todo"
       name="name"
-      value={tasktitle} onChange={handleInputChange}/>
-     <button type="submit">Add</button>
+      value={tasktitle}
+      onChange={handleInputChange} />
+    <button type="submit">{isEditing ? "Edit" : "Add"}</button>
   </form>
-  ) 
-}
-export default TaskFormbsub;
+);
+export default TaskFormsub;

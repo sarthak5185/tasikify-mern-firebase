@@ -12,19 +12,19 @@ import {
   NavLink,
   useLocation,
 } from "react-router-dom";
-function Tasksub({tasks,index,deletetask}) {
+function Tasksub({todoid,index,tasks,taskid,deletetask,getSingleTask,setToComplete}) {
 
   return (
-      <div className="task">
+    <div className={tasks.taskCompleted? "task completed" : "task"}>
       <p>
         <b>{index+1}.  </b>
-        {tasks}
+        {tasks.task}
       </p>
       <div className="task-icons">
-       <FaEdit color="purple" onClick={() =>{
-       }} />
+      <FaCheckDouble color="green" onClick={() => setToComplete(tasks,taskid,todoid)} />
+      <FaEdit color="purple" onClick={() => getSingleTask(todoid,taskid,tasks,index)} />
        <FaRegTrashAlt color="red" onClick={()=>{
-        deletetask(index);
+        deletetask(taskid,todoid);
        }}/>
       </div>
     </div>
