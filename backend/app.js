@@ -8,7 +8,7 @@ const cors=require("cors");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin:["http://localhost:3000","https://mern-task-app.onrender.com"]
+    origin:["http://localhost:3000","https://taskify-mern.onrender.com"]
 }));
 // app.use(cors());
 
