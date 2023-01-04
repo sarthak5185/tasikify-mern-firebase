@@ -1,6 +1,4 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 :root {
   --font-family: "Poppins", sans-serif;
   --dark-blue: #0a1930;
@@ -441,7 +439,7 @@ a:hover {
   background-color: var(--color-primary);
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items:flex-start ;
   padding: 0 10px;
 }
 

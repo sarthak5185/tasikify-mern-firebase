@@ -14,7 +14,7 @@ const {
 const router = express.Router();
 router.get("/",home);
 router.post("/createTodo",createTodo);
-router.get("/getTodo",getTodo);
+router.get("/getTodo/:id",getTodo);
 router.post("/editTodo/:id",editTodo);
 router.delete("/deleteTodo/:id",deleteTodo);
 

@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin:["http://localhost:3000","https://mern-task-app.onrender.com"]
 }));
-
+// app.use(cors());
 
 connectToDB();
 app.use("/",todoRoutes);

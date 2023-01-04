@@ -13,7 +13,12 @@ const todoSchema = new mongoose.Schema({
       createdAt:{type:Date, default:Date()},
       updatedAt:{type:Date, default:Date()}
        }
-      ]
+      ],
+      userId:{
+        type:String,
+        trim:true,
+        require:[true, "UserId is neede"]
+    }
 },
 { timestamps: true }
 );

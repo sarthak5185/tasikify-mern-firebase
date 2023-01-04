@@ -1,11 +1,13 @@
 import TaskForm from "./TaskForm"
 import Task from "./Task"
-import { useEffect, useState} from "react"
+import { useContext, useEffect, useState} from "react"
 import { toast } from "react-toastify"
 import axios from "axios";
 import { FaCentercode } from "react-icons/fa";
 import loadingImg from "../assets/loader.gif"
+import { UserId } from "./Profile";
 const TaskList = () => {
+  const userId = useContext(UserId);  // call userId
   const[isLoading,setisLoading]=useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [todo,setTodo]=useState([]);
@@ -21,8 +23,8 @@ const TaskList = () => {
   const getTasks=async()=>{
     setisLoading(true);
     try{
-      const resp =await axios.get("http://localhost:4000/getTodo");
-      console.log(resp);
+      const resp =await axios.get(`/getTodo/${userId}`);
+      console.log(`inside get tasks:${resp}`);
       if(resp.data.todos.length>0)
       {
         setTodo(resp.data.todos);
@@ -38,7 +40,7 @@ const TaskList = () => {
   }
   useEffect(()=>{
     getTasks();
-  },[]);
+  },[userId]);
   const createTask=async(e)=>{
     e.preventDefault();
     if(title=== "")
@@ -47,7 +49,10 @@ const TaskList = () => {
     }
     try{
       //send axios request
-      await axios.post("http://localhost:4000/createTodo",formData);
+      await axios.post("/createTodo",{
+          title:formData.title,
+          userId:userId
+      });
       setFormData({...formData,title:""});
       toast.success("Task added succesfully");
     }
@@ -60,7 +65,7 @@ const TaskList = () => {
   }
   const deleteTodo=async(id)=>{
     try{
-      await axios.delete(`http://localhost:4000/deleteTodo/${id}`);
+      await axios.delete(`/deleteTodo/${id}`);
     }
     catch(error)
     {
@@ -83,7 +88,7 @@ const TaskList = () => {
     try
     {
       console.log(`inside update todo id:${todoID} title:${formData.title}`);
-      const resp = await axios.post(`http://localhost:4000/editTodo/${todoID}`, {
+      const resp = await axios.post(`/editTodo/${todoID}`, {
         title:formData.title
       });
       console.log(resp);

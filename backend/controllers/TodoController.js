@@ -13,7 +13,7 @@ exports.createTodo = async (req, res) => {
     //5.SEND RESPONSE IN JSON FORMAT TO 201 MEANING SUCESS
     //5.IF ERROR OCCURS THROW THE ERROR
   try {
-    const {title} = req.body;
+    const {title,userId} = req.body;
     let tasks=[];
     // To check all the details
     const TodoExits = await Todo.findOne({title});
@@ -21,7 +21,8 @@ exports.createTodo = async (req, res) => {
       throw new Error("title exists");
     }
     // Inserting into the Database
-    const todo = await Todo.create({title,tasks});
+    const todo = await Todo.create({title,userId});
+    res.header("Access-Control-Allow-Origin", "*");
     res.status(201).json({
       success: true,
       message: "User Created Successfully",
@@ -36,7 +37,8 @@ exports.getTodo = async (req, res) => {
   //1.USING FIND GET ALL TODOS
   //2.SEND IT TO JSON FORMAT TO FRONTEND
   try {
-    const todos = await Todo.find();
+    const userid=req.params.id;
+    const todos = await Todo.find({userId:userid});
     res.status(200).json({
       success: true,
       todos,

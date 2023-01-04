@@ -37,7 +37,7 @@ function TaskListsub() {
   const getTasks=async()=>{
     try
     {
-      const url=`http://localhost:4000/getTasks/${todoid}`;
+      const url=`/getTasks/${todoid}`;
       const resp =await axios.get(url);
       console.log(resp);
       if(resp.data.tasks.length>0)
@@ -64,7 +64,7 @@ function TaskListsub() {
       {
         console.log(formData.tasktitle);
         console.log(todoid);
-        const response=await axios.post(`http://localhost:4000/createTask/${todoid}`,{
+        const response=await axios.post(`/createTask/${todoid}`,{
           task:formData.tasktitle
         });
         console.log(response);
@@ -81,7 +81,7 @@ function TaskListsub() {
     const id=todoid+'_'+taskid;
     try
     {
-      const response=await axios.delete(`http://localhost:4000/deleteTasks/${id}`);
+      const response=await axios.delete(`/deleteTasks/${id}`);
       console.log(response);
     }
     catch(error)
@@ -112,7 +112,7 @@ function TaskListsub() {
     {
       console.log(`inside update task id:${taskID} title:${formData.tasktitle}`);
       const id=todoid+"_"+taskID;
-      const resp = await axios.post(`http://localhost:4000/editTasks/${id}`, {
+      const resp = await axios.post(`/editTasks/${id}`, {
         task:formData.tasktitle
       });
       console.log(resp);
@@ -129,7 +129,7 @@ function TaskListsub() {
     try {
       const id=todoid+"_"+tasks._id;
       console.log(id);
-      const resp = await axios.post(`http://localhost:4000/completedTask/${id}`);
+      const resp = await axios.post(`/completedTask/${id}`);
       console.log(`Inside Completed ${resp}`);
       getTasks();
     } catch (error) {
