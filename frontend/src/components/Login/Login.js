@@ -1,7 +1,9 @@
 import React, {useState} from 'react'
-import {account} from '../appwrite/appwriteConfig'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 import {useNavigate} from 'react-router-dom'
 import { toast } from "react-toastify"
+
 
 function Login() {
     const navigate = useNavigate()
@@ -13,8 +15,9 @@ function Login() {
     const loginUser = async (e) => {
         e.preventDefault()
         try {
-            await account.createEmailSession(user.email, user.password);
-            console.log(user);
+            // await account.createEmailSession(user.email, user.password);
+            const res=await signInWithEmailAndPassword(auth,user.email,user.password)
+            console.log(res);
             navigate("/profile")
         } catch (error) {
             console.log(error);

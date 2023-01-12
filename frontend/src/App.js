@@ -1,12 +1,10 @@
-import TaskList from "./components/TaskList";
+import TaskList from "./components/Tasks/TaskList";
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import TaskListsub from "./components/TaskListsub";
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Profile from './components/Profile';
-
-
+import TaskListsub from "./components/Tasksub/TaskListsub";
+import Signup from './components/Signup/Signup';
+import Login from './components/Login/Login';
+import Profile from './components/Profile/Profile';
 import {
   BrowserRouter as Router,
   Routes,

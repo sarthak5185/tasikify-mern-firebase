@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:4000",
+  "proxy": "https://mern-task-app-backend.onrender.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -10,6 +10,7 @@
     "appwrite": "^10.2.0",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
+    "firebase": "^9.15.0",
     "node-sass": "^7.0.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

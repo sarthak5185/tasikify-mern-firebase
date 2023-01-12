@@ -4,8 +4,9 @@ import { useContext, useEffect, useState} from "react"
 import { toast } from "react-toastify"
 import axios from "axios";
 import { FaCentercode } from "react-icons/fa";
-import loadingImg from "../assets/loader.gif"
-import { UserId } from "./Profile";
+import loadingImg from "../../assets/loader.gif"
+import { UserId } from "../Profile/Profile";
+import "./taskstyle.css";
 const TaskList = () => {
   const userId = useContext(UserId);  // call userId
   const[isLoading,setisLoading]=useState(false);

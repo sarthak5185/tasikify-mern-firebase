@@ -1,11 +1,11 @@
 import React from 'react';
-
+import "./tasksubstyle.css";
 import TaskFormsub from './TaskFormsub';
 import Tasksub from './Tasksub';
 import { toast } from "react-toastify";
 import { useEffect,useState } from 'react';
 import axios from "axios";
-import loadingImg from "../assets/loader.gif";
+import loadingImg from "../../assets/loader.gif";
 import {
   BrowserRouter as Router,
   Routes,

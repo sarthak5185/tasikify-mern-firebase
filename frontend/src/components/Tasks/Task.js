@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaCheckDouble, FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import { BiMessageAltAdd } from "react-icons/bi";
+import "./taskstyle.css";
 import {
   BrowserRouter as Router,
   Routes,

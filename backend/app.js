@@ -7,11 +7,14 @@ const cors=require("cors");
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-    origin:["http://localhost:3000","https://taskify-mern.onrender.com"]
-}));
+// app.use(cors({
+//     origin:["http://localhost:3000","https://taskify-mern.onrender.com"]
+// }));
 // app.use(cors());
-
+app.use(cors({
+    origin:["http://localhost:3000","https://taskify-mern.onrender.com"],
+    credentials: true
+}));
 connectToDB();
 app.use("/",todoRoutes);
 

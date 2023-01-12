@@ -1,19 +1,19 @@
-import React from 'react'
-const TaskFormsub = ({
+import "./taskstyle.css";
+const TaskForm = ({
   createTask,
-  tasktitle,
+  title,
   handleInputChange,
   isEditing,
-  updateTask
+  updateTodo
 }) => (
-  <form className="task-form" onSubmit={isEditing ? updateTask:createTask}>
+  <form className="task-form" onSubmit={isEditing ? updateTodo:createTask}>
     <input
       type="text"
       placeholder="Add a Todo"
       name="name"
-      value={tasktitle}
+      value={title}
       onChange={handleInputChange} />
     <button type="submit">{isEditing ? "Edit" : "Add"}</button>
   </form>
 );
-export default TaskFormsub;
+export default TaskForm;

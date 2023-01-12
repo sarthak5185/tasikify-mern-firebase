@@ -1,5 +1,8 @@
 import React, {useState} from 'react'
-import {account} from '../appwrite/appwriteConfig'
+// import{account} from '../../appwrite/appwriteConfig'
+// import {account} from '.../appwrite/appwriteConfig'
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../../firebase";
 import {useNavigate} from 'react-router-dom'
 import {v4 as uuidv4} from 'uuid'
 import { toast } from "react-toastify"
@@ -12,28 +15,36 @@ function Signup() {
     })
 
     //Signup 
-    const signupUser = async (e) => {
+    const signupUser=(e) => {
         e.preventDefault()
+        createUserWithEmailAndPassword(auth, user.email,user.password)
+      .then(async (res) => {
+        const userf = res.user;
+        await updateProfile(userf, {
+          displayName: user.name,
+        });
+        navigate("/profile");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
+        // const promise = account.create(
+        //     uuidv4(),
+        //     user.email,
+        //     user.password,
+        //     user.name
+        // );
 
-        const promise = account.create(
-            uuidv4(),
-            user.email,
-            user.password,
-            user.name
-        );
-
-        promise.then(
-            function(response){
-                console.log(response);
-                navigate("/profile") //success
-            },
-            function(error) {
-                console.log(error); // Failure
-                toast.error(error.message);
-            }
-        )
-
-
+        // promise.then(
+        //     function(response){
+                
+        //     },
+        //     function(error) {
+        //         console.log(error); // Failure
+        //         toast.error(error.message);
+        //     }
+        // )
     }
 
   return (
